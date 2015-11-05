@@ -1,9 +1,8 @@
-package GA;
-
-import GA.Gene;
+package khoneki.genetic.algorithm;
 
 /**
- * Created by ¿ø on 2015-11-05.
+ * @author Khoneki <woni8708@naver.com>
+ * @since 2015-11-05
  */
 public class Population {
     public int entCnt;
