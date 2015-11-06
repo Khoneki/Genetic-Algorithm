@@ -1,64 +1,56 @@
 package khoneki.genetic.algorithm;
 
+import java.util.List;
+import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 /**
  * @author Khoneki <woni8708@naver.com>
  * @since 2015-11-05
  */
 public class Population {
-    public int entCnt;
-    public Gene entity[];
-    public int max = 0, min = 10, sumOfFit = 0;
+    public List<Gene> entities;
 
-    public void regen() {
-        for(int i = 0; i < entCnt; i++) {
-            entity[i].setGene();
-        }
+    public void regenerate() {
+        this.entities = IntStream.range(0, this.entities.size()).mapToObj(i -> new Gene()).collect(Collectors.toList());
     }
-    public void getMax() {
-        for(int i = 0; i < entCnt; i ++) {
-            if(entity[i].score > max) max = entity[i].score;
-        }
+
+    public Gene getMax() {
+        return this.entities.stream().max(Gene.COMPARATOR).orElseThrow(NullPointerException::new);
     }
-    public void getMin() {
-        for(int i = 0; i < entCnt; i ++) {
-            if(entity[i].score < max) min = entity[i].score;
-        }
+    public Gene getMin() {
+        return this.entities.stream().min(Gene.COMPARATOR).orElseThrow(NullPointerException::new);
     }
+
     public double getAverage() {
-        int average = 0;
-        for(int i = 0; i < entCnt; i++) {
-            average += entity[i].score;
-        }
-        return average;
+        return this.entities.stream().mapToLong(Gene::getScore).average().orElseThrow(NullPointerException::new);
     }
-    public void f() {
-        for(int i = 0; i < entCnt; i++)
-            entity[i].fit = max-entity[i].score + (max-min)/(4-1);
+
+    public void calculateFit() {
+        Gene min = this.getMin();
+        Gene max = this.getMax();
+
+        this.entities.forEach(gene -> gene.setFit(min, max));
     }
-    public void getSumOfFit() {
-        sumOfFit = 0;
-        for(int i = 0; i < entCnt; i++)
-            sumOfFit += entity[i].fit;
+
+    public double getSumOfFit() {
+        return this.entities.stream().mapToDouble(Gene::getFit).sum();
     }
+
     public int rouletteWheel() {
+        int a = new Random().nextInt((int) this.getSumOfFit());
         double sum = 0;
-        int a = (int)Math.floor(Math.random()*sumOfFit);
-        for(int i = 0; i < entCnt; i++) {
-            sum += entity[i].fit;
-            if(a<sum) return i;
+
+        for(int i = 0; i < this.entities.size(); i++) {
+            sum += this.entities.get(i).getFit();
+            if(a < sum) return i;
         }
+
         return 0;
     }
-    public void sort() throws java.lang.CloneNotSupportedException{
-        Gene temp;
-        for(int i = 0; i < entCnt-2; i++) {
-            for(int m = i; m < entCnt-1; m++) {
-                if(entity[m].score>entity[m+1].score) {
-                    temp = entity[m].clone();
-                    entity[m+1] = entity[m].clone();
-                    entity[m+1] = temp.clone();
-                }
-            }
-        }
+
+    public void sort(){
+        this.entities = this.entities.stream().sorted().map(Gene::clone).collect(Collectors.toList());
     }
 }
