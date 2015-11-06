@@ -38,16 +38,16 @@ public class Population {
         return this.entities.stream().mapToDouble(Gene::getFit).sum();
     }
 
-    public int rouletteWheel() {
+    public Gene rouletteWheel() {
         int a = new Random().nextInt((int) this.getSumOfFit());
+
         double sum = 0;
-
-        for(int i = 0; i < this.entities.size(); i++) {
-            sum += this.entities.get(i).getFit();
-            if(a < sum) return i;
+        for(Gene gene: this.entities) {
+            sum += gene.getFit();
+            if(sum > a) return gene;
         }
-
-        return 0;
+        
+        return this.entities.get(0);
     }
 
     public void sort(){
