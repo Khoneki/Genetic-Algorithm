@@ -12,8 +12,8 @@ import java.util.stream.IntStream;
 public class Population {
     public List<Gene> entities;
 
-    public void regenerate() {
-        this.entities = IntStream.range(0, this.entities.size()).mapToObj(i -> new Gene()).collect(Collectors.toList());
+    public Population(int size){
+        this.entities = IntStream.range(0, size).mapToObj(i -> new Gene()).collect(Collectors.toList());
     }
 
     public Gene getMax() {
@@ -39,14 +39,15 @@ public class Population {
     }
 
     public Gene rouletteWheel() {
-        int a = new Random().nextInt((int) this.getSumOfFit());
+        int sumOfFit = (int) this.getSumOfFit();
+        int a = sumOfFit == 0 ? 0 : new Random().nextInt(sumOfFit);
 
         double sum = 0;
         for(Gene gene: this.entities) {
             sum += gene.getFit();
             if(sum > a) return gene;
         }
-        
+
         return this.entities.get(0);
     }
 

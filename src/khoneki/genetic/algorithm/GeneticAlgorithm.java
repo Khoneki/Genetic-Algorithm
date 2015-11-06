@@ -13,8 +13,9 @@ public class GeneticAlgorithm {
 
     public static void main(String[] args) {
         //TODO: Implement this method
-        parent = new Population();
-        son = new Population();
+        parent = new Population(100);
+        son = new Population(100);
+
         for(int i = 0; i < 1000; i++) {
             if(parent.getAverage() >= 10) break;
             init();
