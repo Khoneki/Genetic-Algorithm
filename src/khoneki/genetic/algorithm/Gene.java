@@ -19,6 +19,10 @@ public class Gene implements Cloneable, Comparable<Gene> {
         this.gene = IntStream.range(0, Gene.IMAGINARY.length).map(i -> new Random().nextInt(2)).toArray();
     }
 
+    public int[] getGene() {
+        return gene;
+    }
+
     public long getScore() {
         return IntStream.range(0, Gene.IMAGINARY.length).filter(i -> this.gene[i] == Gene.IMAGINARY[i]).count();
     }
