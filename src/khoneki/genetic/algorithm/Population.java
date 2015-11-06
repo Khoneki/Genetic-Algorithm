@@ -49,7 +49,7 @@ public class Population {
         }
         return 0;
     }
-    public void sort() {
+    public void sort() throws java.lang.CloneNotSupportedException{
         Gene temp;
         for(int i = 0; i < entCnt-2; i++) {
             for(int m = i; m < entCnt-1; m++) {

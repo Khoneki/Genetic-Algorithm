@@ -37,8 +37,7 @@ public class Gene {
             }
         }
     }
-    @Override
-    public Gene clone() {
-        return this.clone();
+    public Gene clone() throws java.lang.CloneNotSupportedException {
+        return (Gene)super.clone();
     }
 }
