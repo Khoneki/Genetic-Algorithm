@@ -45,15 +45,13 @@ public class GeneticAlgorithm {
     }
 
     public static void confront() {
-        parent.sort();
-        son.sort();
-        for(int i = 0; i < parent.entities.size()/2; i++) parent.entities.set(i, son.entities.get(son.entities.size()-1-i).clone());
+        parent.sort(); son.sort();
+        IntStream.range(0, parent.entities.size() / 2).forEach(i -> parent.entities.set(i, son.entities.get(son.entities.size() - 1 - i).clone()));
     }
 
     public static void evolution() {
-        for(int i = 0; i < son.entities.size(); i++) {
-            cross(i);
-            son.entities.get(i).mutent();
-        }
+        IntStream.range(0, son.entities.size()).forEach(i -> {
+            cross(i); son.entities.get(i).mutent();
+        });
     }
 }

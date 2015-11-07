@@ -36,7 +36,8 @@ public class Gene implements Cloneable, Comparable<Gene> {
     }
 
     public void mutent() {
-        IntStream.range(0, Gene.IMAGINARY.length).forEach(i -> {if(new Random().nextInt(100) <= Math.pow(10 - this.getScore(), 2)) this.gene[i] = (this.gene[i] == 0) ? 1 : 0;});
+        final double a = Math.pow(10 - this.getScore(), 2);
+        IntStream.range(0, Gene.IMAGINARY.length).filter(i -> new Random().nextInt(100) <= a).forEach(i -> this.gene[i] = (this.gene[i] == 0) ? 1 : 0);
     }
 
     @Override
