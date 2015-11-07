@@ -10,14 +10,13 @@ import java.util.stream.IntStream;
 public class GeneticAlgorithm {
     public static Population parent, son;
     public static Gene father, mother;
-    public static int maxOfAverage = 0, minOfAverage = 10;
+    public static int maxOfAverage = 0, minOfAverage = 20;
 
     public static void main(String[] args) {
-        //TODO: Implement this method
         parent = new Population(100);
         son = new Population(100);
 
-        for(int i = 0; i < 100; i++) {
+        for(int i = 0; i < 1000; i++) {
             System.out.print(parent.getAverage()+" ");
             if((i+1)%10 == 0) System.out.println();
             if(parent.getAverage() >= 10) break;
@@ -37,11 +36,11 @@ public class GeneticAlgorithm {
     }
 
     public static void cross(int num) {
-        int a = new Random().nextInt(8)+1;
-        int b = new Random().nextInt(10-a)+a;
+        int a = new Random().nextInt(son.entities.get(num).getGene().length-1)+1;
+        int b = new Random().nextInt(son.entities.get(num).getGene().length-a)+a;
         for(int i = 0; i < a; i++) son.entities.get(num).getGene()[i] = father.getGene()[i];
         for(int n = a; n < b; n++) son.entities.get(num).getGene()[n] = mother.getGene()[n];
-        for(int m = b; m < 10; m++) son.entities.get(num).getGene()[m] = father.getGene()[m];
+        for(int m = b; m < son.entities.get(num).getGene().length; m++) son.entities.get(num).getGene()[m] = father.getGene()[m];
     }
 
     public static void confront() {
