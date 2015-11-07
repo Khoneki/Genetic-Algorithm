@@ -1,5 +1,6 @@
 package khoneki.genetic.algorithm;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Random;
 import java.util.stream.IntStream;
@@ -52,5 +53,10 @@ public class Gene implements Cloneable, Comparable<Gene> {
     @Override
     public int compareTo(Gene that){
         return Gene.COMPARATOR.compare(this, that);
+    }
+
+    @Override
+    public String toString(){
+        return String.format("Gene{gene=%s, fit=%f}", Arrays.toString(this.gene), this.fit);
     }
 }
