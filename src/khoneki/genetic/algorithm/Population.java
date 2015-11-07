@@ -40,6 +40,7 @@ public class Population {
 
     public Gene rouletteWheel() {
         int sumOfFit = (int) this.getSumOfFit();
+        //System.out.println(sumOfFit);
         int a = sumOfFit == 0 ? 0 : new Random().nextInt(sumOfFit);
 
         double sum = 0;

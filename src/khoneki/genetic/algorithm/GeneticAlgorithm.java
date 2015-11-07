@@ -1,6 +1,7 @@
 package khoneki.genetic.algorithm;
 
 import java.util.Random;
+import java.util.stream.IntStream;
 
 /**
  * @author Khoneki <woni8708@naver.com>
@@ -16,11 +17,15 @@ public class GeneticAlgorithm {
         parent = new Population(100);
         son = new Population(100);
 
-        for(int i = 0; i < 1000; i++) {
+        for(int i = 0; i < 100; i++) {
+            System.out.print(parent.getAverage()+" ");
+            if((i+1)%10 == 0) System.out.println();
             if(parent.getAverage() >= 10) break;
             init();
             evolution();
             confront();
+            //IntStream.range(0, Gene.IMAGINARY.length).forEach(m -> {IntStream.range(0, 10).forEach(n -> System.out.print(son.entities.get(m).getGene()[n])); System.out.print(",");});
+            //System.out.println();
         }
     }
 
@@ -28,6 +33,7 @@ public class GeneticAlgorithm {
         parent.calculateFit();
         father = parent.rouletteWheel();
         mother = parent.rouletteWheel();
+        //System.out.println(parent.getSumOfFit()+" "+father.getFit()+" "+mother.getFit());
     }
 
     public static void cross(int num) {
@@ -39,7 +45,9 @@ public class GeneticAlgorithm {
     }
 
     public static void confront() {
-        for(int i = 0; i < parent.entities.size(); i++) parent.entities.set(i, son.entities.get(i).clone());
+        parent.sort();
+        son.sort();
+        for(int i = 0; i < parent.entities.size()/2; i++) parent.entities.set(i, son.entities.get(son.entities.size()-1-i).clone());
     }
 
     public static void evolution() {
