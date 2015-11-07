@@ -16,10 +16,10 @@ public class GeneticAlgorithm {
         parent = new Population(100);
         son = new Population(100);
 
-        for(int i = 0; i < 100; i++) {
+        for(int i = 0; i < 1000; i++) {
             System.out.print(parent.getAverage()+" ");
             if((i+1)%10 == 0) System.out.println();
-            if(parent.getAverage() >= 20) break;
+            if(parent.getAverage() >= 10) break;
             init();
             evolution();
             confront();
